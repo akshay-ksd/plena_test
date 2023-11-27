@@ -105,9 +105,11 @@ const ProductList: FC<any> = (props, ref) => {
 
   const selectedCat = (category: string) => {
     if (category == "All") {
+      products.current = products.current?.map((item: any, index: number) => ({ ...item, value: check_is_in_cart(item?.id) ? check_is_in_cart(item?.id) : 0, isSave: check_is_saved(item?.id) == undefined ? false : true, id: index }));
       recyclerRef?.current?.loadDataFromApi(products.current);
     } else {
-      const data = products.current.filter((x: any) => x.category == category);
+      products.current = products.current?.map((item: any, index: number) => ({ ...item, value: check_is_in_cart(item?.id) ? check_is_in_cart(item?.id) : 0, isSave: check_is_saved(item?.id) == undefined ? false : true, id: index }));
+      const data = products.current
       recyclerRef?.current?.loadDataFromApi(data);
     }
   }
