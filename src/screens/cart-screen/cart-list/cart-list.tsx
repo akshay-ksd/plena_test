@@ -31,14 +31,16 @@ const ProductList = () => {
   };
 
   const updateCount = (value: number, id: number, item: any) => {
-    recyclerRef?.current?.updateCount(value, id)
+    recyclerRef.current.state.dataList[id].item.value = value;
+    recyclerRef.current?.setState({dataList:recyclerRef.current.state.dataList})
     setTimeout(() => {
       updateCart(value, item)
     }, 10);
   }
 
   const isSave = (value: boolean, id: number) => {
-    recyclerRef?.current?.isSave(value, id)
+    recyclerRef.current.state.dataList[id].item.isSave = value;
+    recyclerRef.current?.setState({dataList:recyclerRef.current.state.dataList})
   }
 
   return (

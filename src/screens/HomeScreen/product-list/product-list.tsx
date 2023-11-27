@@ -85,22 +85,17 @@ const ProductList: FC<any> = (props, ref) => {
 
     // newData[id].value = value;
     // setListData(newData)
-    recyclerRef?.current?.updateCount(value, id)
+    // recyclerRef?.current?.updateCount(value, id)
+    recyclerRef.current.state.dataList[id].item.value = value;
+    recyclerRef.current?.setState({dataList:recyclerRef.current.state.dataList})
     setTimeout(() => {
       updateCart(value, item)
     }, 10);
   }
 
   const isSave = (value: boolean, id: number) => {
-    recyclerRef?.current?.isSave(value, id)
-    // let newData:any = Object.assign([],ListData);
-
-    // newData[id].isSave = value;
-    // setListData(newData)
-    // recyclerRef?.current?.updateCount(value, id)
-    // setTimeout(() => {
-    //   updateCart(value, item)
-    // }, 10);
+    recyclerRef.current.state.dataList[id].item.isSave = value;
+    recyclerRef.current?.setState({dataList:recyclerRef.current.state.dataList})
   }
 
   const selectedCat = (category: string) => {
@@ -109,7 +104,7 @@ const ProductList: FC<any> = (props, ref) => {
       recyclerRef?.current?.loadDataFromApi(products.current);
     } else {
       products.current = products.current?.map((item: any, index: number) => ({ ...item, value: check_is_in_cart(item?.id) ? check_is_in_cart(item?.id) : 0, isSave: check_is_saved(item?.id) == undefined ? false : true, id: index }));
-      const data = products.current
+      const data = products.current.filter((x)=>x.category == category)
       recyclerRef?.current?.loadDataFromApi(data);
     }
   }
